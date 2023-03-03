@@ -1,60 +1,31 @@
+const apiPosts = `http://localhost:4200/api/posts`;
+
 describe('TODO App', () => {
-  const S = {
-    title: '[data-cy="title"]',
-    menueLink: '.p-menuitem-link',
-    toDoInputField: '[data-cy="todo-text"]'
-  };
-
-  beforeEach(() => {
-    cy.visit('http://localhost:4200');
-  });
-
-  it('Test welcome page', () => {
-    cy.get(S.title).should('have.text', 'welcome!');
-    cy.url().should('include', '/home');
-  });
-
-  it.skip('should check navigation labels', () => {
-    cy.get(S.menuLink).contains('have.text', ['Home', 'Todo list', 'Posts', 'Gallery', 'About']);
-    // .should('have.attr', 'href').and('include', 'contact')
+  context('GET /api/posts', () => {
+      it('gets a list of posts', () => {
+        cy.request('GET', apiPosts).then((response) => {
+          expect(response.status).to.eq(200);
+          expect(response.body.length).to.eq(100);
+        });
+      });
     });
 
-  it('Test TodoPage', () => {
-    cy.visit('http://localhost:4200/todo');
+    context('GET /api/posts/:postId', () => {
+    it('get a post', () => {
+      const postId = 2;
+      cy.request('GET', `http://localhost:4200/api/posts/${postId}`).then((response) => {
+        expect(response.status).to.eq(200);
+        console.log(response);
+        expect(response.body).to.deep.equal({
+          userId: 1,
+          id: postId,
+          title: 'qui est esse',
+          body: 'est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla',
+        });
+      });
+    });
 
-    cy.get(S.title).should('have.text', 'Todo list');
-    cy.get(S.toDoInputField).type('Test item');
-    cy.get('[data-cy="add-btn"]').click();
-    cy.get(S.toDoInputField).type('First item');
-    cy.get('[data-cy="add-btn"]').click();
-    cy.get(S.toDoInputField).type('Second item');
-    cy.get('[data-cy="add-btn"]').click();
-    cy.get('[data-cy="delete-btn"]').first().click();
-    cy.wait(500);
-    cy.get('[data-cy="edit-btn"]').first().click();
-    cy.get('[data-cy="edit-text"]').clear().type('New text');
-    cy.get('[data-cy="save-btn"]').click();
-    cy.get('[data-cy="label"]').first().should('have.text', 'New text');
 
-    //cy.get(S.todoItem).should('have.length', 2);
-  });
-
-  it('Test PostsPage', () => {
-    cy.visit('http://localhost:4200/posts');
-
-    cy.get(S.title).should('have.text', 'Posts');
-   });
-
-  it('Test GalleryPage', () => {
-    cy.visit('http://localhost:4200/gallery');
-
-    cy.get(S.title).should('have.text', 'Gallery');
-  });
-
-  it('Test AboutPage', () => {
-    cy.visit('http://localhost:4200/about');
-
-    cy.get(S.title).should('have.text', 'About');
   });
 
 });
