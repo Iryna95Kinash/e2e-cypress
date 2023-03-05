@@ -63,6 +63,7 @@ describe('TODO App', () => {
      it('get comments', () => {
         cy.request('GET', `http://localhost:4200/api/posts/1/comments`).then((response) => {
           expect(response.status).to.eq(200);
+          expect(response.body.length).to.eq(5);
           console.log(response);
         });
      });
