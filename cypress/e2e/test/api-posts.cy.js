@@ -56,6 +56,10 @@ describe('TODO App', () => {
 
   context('DELETE /posts', () => {
       it('delete a post', () => {
+      cy.request('DELETE', `http://localhost:4200/api/posts/1`).then((response) => {
+                expect(response.status).to.eq(200);
+                expect(response.body).to.deep.equal({});
+              });
       });
   });
 
@@ -64,7 +68,6 @@ describe('TODO App', () => {
         cy.request('GET', `http://localhost:4200/api/posts/1/comments`).then((response) => {
           expect(response.status).to.eq(200);
           expect(response.body.length).to.eq(5);
-          console.log(response);
         });
      });
   });
