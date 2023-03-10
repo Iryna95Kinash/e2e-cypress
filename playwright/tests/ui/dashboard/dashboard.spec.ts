@@ -4,7 +4,7 @@ const S = {
   pageTitle: '[data-cy="title"]',
 };
 
-test.only('Dashboard', async ({ page }) => {
+test('Dashboard', async ({ page }) => {
 
   await page.goto('/');
   await expect(page).toHaveURL('/home');
