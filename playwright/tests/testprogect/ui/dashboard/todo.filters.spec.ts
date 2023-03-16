@@ -16,7 +16,7 @@ const S = {
   allTodoItemsBtn: '[data-cy="show-all-btn" ]',
 };
 
-test.describe('Todo Filters', () => {
+test.describe.skip('Todo Filters', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/todo');
 

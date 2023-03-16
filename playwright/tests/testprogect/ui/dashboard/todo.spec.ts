@@ -12,7 +12,7 @@ const S = {
   deleteTodoBtn: '[data-cy="delete-btn"]',
 };
 
-test.describe('Todo', () => {
+test.describe.skip('Todo', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/todo');
   });

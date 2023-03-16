@@ -1,15 +1,14 @@
 import { test, expect } from '@playwright/test';
 
 const S = {
-  placeholderTitle: '[placeholder="What needs to be done?")]',
-  todosInput: '[class="new-todo"]',
   todosItem: '[class="view"]',
+  todosInput: '[class="new-todo"]',
   deleteTodosBtn: '[class="destroy"]',
+  allTodosItemsBtn: 'a:has-text("All")',
   todosItemCheckbox: '[type="checkbox"]',
-//   completedTodosItemsBtn:
-//   activeTodosItemsBtn:
-//   allTodosItemsBtn:
-//   clearCompletedTodosItemsBtn:
+  activeTodosItemsBtn: 'a:has-text("Active")',
+  completedTodosItemsBtn: 'a:has-text("Completed")',
+  clearCompletedTodosItemsBtn: '[class="clear-completed"]',
  };
 
 test.describe('Todos Filters', () => {
@@ -50,13 +49,13 @@ test.describe('Todos Filters', () => {
    const todosItems = await page.locator(S.todosItem).count();
    await page.pause();
    await expect(todosItems).toBe(4);
-  });
+ });
 
   test('Test Clear Completed btn', async ({ page }) => {
-     await page.locator(S.clearCompletedTodosItemsBtn).click();
+   await page.locator(S.clearCompletedTodosItemsBtn).click();
 
-     const todosItems = await page.locator(S.todosItem).count();
-     await page.pause();
-     await expect(todosItems).toBe(3);
-    });
+   const todosItems = await page.locator(S.todosItem).count();
+   await page.pause();
+   await expect(todosItems).toBe(3);
+  });
 });

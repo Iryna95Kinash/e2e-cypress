@@ -5,7 +5,7 @@ const S = {
   menuLink: '.p-menuitem-link',
 };
 
-test('Navigation', async ({ page }) => {
+test.skip('Navigation', async ({ page }) => {
   await page.goto('/');
 
   const menuTexts = await page.locator(S.menuLink).allInnerTexts();

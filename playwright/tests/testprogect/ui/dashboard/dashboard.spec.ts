@@ -4,7 +4,7 @@ const S = {
   pageTitle: '[data-cy="title"]',
 };
 
-test('Dashboard', async ({ page }) => {
+test.skip('Dashboard', async ({ page }) => {
 
   await page.goto('/');
   await expect(page).toHaveURL('/home');

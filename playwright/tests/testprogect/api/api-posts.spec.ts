@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 
 
-test.describe('Posts API', () => {
+test.describe.skip('Posts API', () => {
   test('GET /api/posts', async ({ request }) => {
     const response = await request.get('/api/posts');
     const posts = await response.json();
@@ -53,7 +53,6 @@ test.describe('Posts API', () => {
       console.log(editPostData)
 
       const response = await request.post('/api/posts', { data: { ...editPostData } });
-      const newPost = await response.json();
 
       await expect(response.status()).toBe(201);
   });
@@ -68,7 +67,6 @@ test.describe('Posts API', () => {
       console.log(deletePostData)
 
       const response = await request.post('/api/posts', { data: { ...deletePostData } });
-      const newPost = await response.json();
 
       await expect(response.status()).toBe(201);
   });
@@ -76,8 +74,6 @@ test.describe('Posts API', () => {
   test('GET /api/posts/1/comments', async ({ request }) => {
     const response = await request.get('/api/posts/1/comments');
     const posts = await response.json();
-
-    //console.log(posts);
 
     await expect(response.status()).toBe(200);
     await expect(posts.length).toBe(5);

@@ -1,18 +1,10 @@
 import { test, expect } from '@playwright/test';
 
 const S = {
-  placeholderTitle: '[placeholder="What needs to be done?")]',
-  todosInput: '[class="new-todo"]',
   todosItem: '[class="view"]',
+  todosInput: '[class="new-todo"]',
   deleteTodosBtn: '[class="destroy"]',
  };
-
-// test('Placeholder', async ({ page }) => {
-//
-//   await page.goto('/examples/react/#');
-//   await expect(page.locator(S.placeholderTitle)).toContainText('What needs to be done?');
-//
-// });
 
 test.describe('Todos', () => {
   test.beforeEach(async ({ page }) => {
@@ -43,29 +35,29 @@ test.describe('Todos', () => {
     await page.locator(S.todosInput).press('Enter');
 
     const firstTodosItem = await page.locator(S.todosItem).nth(0);
-    //await firstTodosItem.locator(S.todosInput).dblclick();
+    await firstTodosItem.locator('label').dblclick({ force: true });
 
+    await page.pause();
 
-    await firstTodosItem.locator(S.todosInput).fill(newText);
-    await firstTodosItem.locator(S.todosInput).press('Enter');
+    await firstTodosItem.locator('..').locator('[class="edit"]').fill(newText);
+    await firstTodosItem.locator('..').locator('[class="edit"]').press('Enter');
 
     await expect(firstTodosItem).toContainText(newText);
   });
 
   test('Delete todos item', async ({ page }) => {
-      await page.locator(S.todosInput).fill('item 1');
-      await page.locator(S.todosInput).press('Enter');
+    await page.locator(S.todosInput).fill('item 1');
+    await page.locator(S.todosInput).press('Enter');
 
-      await page.locator(S.todosInput).fill('item 2');
-      await page.locator(S.todosInput).press('Enter');
+    await page.locator(S.todosInput).fill('item 2');
+    await page.locator(S.todosInput).press('Enter');
 
-      await expect(await page.locator(S.todosItem).count()).toBe(2);
+    await expect(await page.locator(S.todosItem).count()).toBe(2);
 
-      const firstTodosItem = await page.locator(S.todosItem).nth(0);
-      //await firstTodosItem.locator(S.deleteTodosBtn).click();
+    const firstTodosItem = await page.locator(S.todosItem).nth(0);
+    await firstTodosItem.hover();
+    await firstTodosItem.locator(S.deleteTodosBtn).click();
 
-      await expect(await page.locator(S.todosItem).count()).toBe(1);
+    await expect(await page.locator(S.todosItem).count()).toBe(1);
   });
-
 });
-
